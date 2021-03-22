@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  r
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <title>Category List</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <h2>Category List</h2>
+      </div>
+      <div class="col-sm-6 text-right">
+        <button type="button" class="btn btn-primary" onclick="goToNewCategory()">Insert</button>
+        <button type="button" class="btn btn-info" onclick="goToCalculator()">Calculator</button>
+      </div>
+      
+
+    </div>
+  
+    <table class="table table-dark table-hover">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% list.forEach(val=>{ %>
+          <tr>
+            <td>
+              <%= val.id %>
+            </td>
+            <td>
+              <%= val.name %>
+            </td>
+            <td>
+              <%= val.amount %>
+            </td>
+            <td class="text-right">
+              <button type="button" class="btn btn-success" onclick="goToEditCategory('<%= val.id%>')">Edit</button>
+              <button type="button" class="btn btn-danger" onclick="handleDeleteCategory('<%= val.id%>')">Del</button>
+            </td>
+          </tr>
+          <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function goToNewCategory(){
+      window.location.href='/category/add-category'
+    }
+    function goToCalculator(){
+      window.location.href='/category/maytinh'
+    }
+    function goToEditCategory(id){
+      window.location.href='/category/edit-category/'+id
+    }
+    function handleDeleteCategory(id){
+        $.ajax({
+          type: "DELETE",
+          url: '/category/delete/' + id,
+          success: function(data)
+          {   
+            if(data.res == true){
+              window.location.href='/category'
+            }                
+          }
+        }); 
+      }
+  </script>
+
+
+</body>
+
+
+
+</html>
